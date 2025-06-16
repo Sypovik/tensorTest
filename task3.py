@@ -87,8 +87,14 @@ class VersionAnalyzer:
         sorted_versions = sorted(self.all_versions, key=lambda v: normalized[v])
         
         # Фильтрация версий старше целевой
-        older = [v for v in sorted_versions if normalized[v] < self.normalized_target]
         
+        older = []
+        for v in sorted_versions:
+            if normalized[v] < self.normalized_target:
+                older.append(v)
+            else:
+                break
+
         # Вывод результатов
         print("\nВсе версии (отсортировано):")
         print('\n'.join(f"  {v}" for v in sorted_versions))
