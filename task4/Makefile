@@ -75,7 +75,7 @@ info:
 create_mount: launch mkdir mount transfer
 	
 
-create: mkdir $(target) transfer
+create: launch mkdir $(target) transfer
 
 	# Перезагружаем systemd и запускаем сервисы
 	multipass exec $(VM_NAME) -- sudo systemctl daemon-reexec
