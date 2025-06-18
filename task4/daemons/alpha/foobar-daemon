@@ -1,0 +1,14 @@
+#!/bin/bash
+
+PWD=$(pwd)
+
+count=0
+
+PATH_LOG=$PWD/log.txt
+echo "start alpha" >> $PATH_LOG
+while true; do
+    
+    echo "alpha is running seconds $count" >> $PATH_LOG
+    count=$((count+10))
+    sleep 10
+done

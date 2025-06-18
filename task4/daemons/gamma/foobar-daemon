@@ -1,0 +1,15 @@
+#!/bin/bash
+
+PWD=$(pwd)
+
+count=0
+
+PATH_LOG=$PWD/log.txt
+
+echo "start gamma" >> $PATH_LOG
+while true; do
+    
+    count=$((count+10))
+    echo "gamma is running seconds $count" >> $PATH_LOG
+    sleep 10
+done
