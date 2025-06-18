@@ -1,3 +1,6 @@
+
+target=
+
 # Имя виртуальной машины
 VM_NAME=vm
 
@@ -42,19 +45,19 @@ transfer:
 	# Передача unit-файлов
 	multipass transfer $(HOST_UNITS_PATH)/* $(VM_NAME):$(VM_SRC_PATH)/tmp
 	multipass exec $(VM_NAME) -- sudo sh -c "cp -r $(VM_SRC_PATH)/tmp/* $(VM_UNITS_PATH)"
-	multipass exec $(VM_NAME) -- sudo rm -rf $(VM_SRC_PATH)/tmp/*
+	multipass exec $(VM_NAME) -- sudo sh -c "rm -rf $(VM_SRC_PATH)/tmp/*"
 
 	# Передача демонов
 	multipass transfer -r $(HOST_DAEMONS_PATH)/* $(VM_NAME):$(VM_SRC_PATH)/tmp
 
 	# Копируем содержимое ./daemons/* в /opt/misc
-	multipass exec $(VM_NAME) -- sudo sh -c "cp -r $(VM_SRC_PATH)/tmp/daemons/* $(VM_DAEMONS_OLD_PATH)"
+	multipass exec $(VM_NAME) -- sudo sh -c "cp -r $(VM_SRC_PATH)/tmp/* $(VM_DAEMONS_OLD_PATH)"
 
 	# Делаем все foobar-daemon исполняемыми
 	multipass exec $(VM_NAME) -- sudo sh -c "chmod +x $(VM_DAEMONS_OLD_PATH)/*/foobar-daemon"
 
 	# Очищаем временный каталог
-	multipass exec $(VM_NAME) -- sudo rm -rf $(VM_SRC_PATH)/tmp/*
+	multipass exec $(VM_NAME) -- sudo rm -rf $(VM_SRC_PATH)/tmp
 	
 	multipass transfer $(HOST_SRC_PATH)/*.sh $(VM_NAME):$(VM_SRC_PATH)
 
@@ -68,7 +71,11 @@ info:
 	@echo ""
 
 # Создание и настройка виртуальной машины (полный процесс)
-create: launch mkdir transfer
+
+create_mount: launch mkdir mount transfer
+	
+
+create: mkdir $(target) transfer
 
 	# Перезагружаем systemd и запускаем сервисы
 	multipass exec $(VM_NAME) -- sudo systemctl daemon-reexec
