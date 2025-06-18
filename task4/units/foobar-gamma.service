@@ -1,0 +1,10 @@
+[Unit]
+Description=Foobar Gamma Service
+
+[Service]
+WorkingDirectory=/opt/misc/gamma
+ExecStart=/opt/misc/gamma/foobar-daemon
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

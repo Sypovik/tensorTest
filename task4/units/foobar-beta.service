@@ -1,0 +1,10 @@
+[Unit]
+Description=Foobar Beta Service
+
+[Service]
+WorkingDirectory=/opt/misc/beta
+ExecStart=/opt/misc/beta/foobar-daemon
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

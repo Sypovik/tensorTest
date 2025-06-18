@@ -1,0 +1,10 @@
+[Unit]
+Description=Foobar Alpha Service
+
+[Service]
+WorkingDirectory=/opt/misc/alpha
+ExecStart=/opt/misc/alpha/foobar-daemon
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
